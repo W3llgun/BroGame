@@ -28,8 +28,7 @@ namespace UnityStandardAssets._2D
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
         }
-
-
+        
         private void FixedUpdate()
         {
             m_Grounded = false;
