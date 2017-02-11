@@ -7,23 +7,45 @@ using UnityEngine.Networking;
 
 public class Player : NetworkBehaviour
 {
-
-    [SerializeField]private float maxSpeed = 10f;                    // The fastest the player can travel in the x axis.
-    [SerializeField]private float jumpForce = 400f;                  // Amount of force added when the player jumps.
-    [Range(0, 1)]
-    [SerializeField]private float crouchSpeed = .36f;                 // Amount of maxSpeed applied to crouching movement. 1 = 100%
-    [SerializeField]private bool airControl = false;                 // Whether or not a player can steer while jumping;
-    [SerializeField]private LayerMask whatIsGround;
-    [SerializeField]private Movement movement;
-    [SerializeField]private PlayerInput input;
+    public LayerMask whatIsGround;
+    public Movement movement;
+    public PlayerInput input;
+    Vector2 direction;
 
     void Start () {
-		
+        direction = Vector2.zero;
+        movement.initialise(GetComponent<Rigidbody2D>());
 	}
 	
 	void Update () {
         if (!isLocalPlayer) return;
-
-
+        
+        if(input.isLeft)
+        {
+            Debug.Log("Left");
+            direction.x = -1;
+        }
+        else if(input.isRight)
+        {
+            Debug.Log("Right");
+            direction.x = 1;
+        }
+        else
+        {
+            direction.x = 0;
+        }
 	}
+
+    public void FixedUpdate()
+    {
+        if(direction.x == 0)
+        {
+            movement.stop();
+        }
+        else
+        {
+            movement.move(direction);
+        }
+        
+    }
 }

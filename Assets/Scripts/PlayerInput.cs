@@ -33,4 +33,13 @@ public class PlayerInput {
     public bool isJumpDown { get { return Input.GetKeyDown(Jump); } }
     public bool isPrimaryShootDown { get { return Input.GetMouseButtonDown((int)primaryShoot); } }
     public bool isSecondaryShootDown { get { return Input.GetMouseButtonDown((int)secondaryShoot); } }
+
+
+    public bool isLeft { get { return Input.GetKey(Left); } }
+    public bool isRight { get { return Input.GetKey(Right); } }
+    public bool isUp { get { return Input.GetKey(Up); } }
+    public bool isDown { get { return Input.GetKey(Down); } }
+    public bool isJump { get { return Input.GetKey(Jump); } }
+    public bool isPrimaryShoot { get { return Input.GetMouseButton((int)primaryShoot); } }
+    public bool isSecondaryShoot { get { return Input.GetMouseButton((int)secondaryShoot); } }
 }
