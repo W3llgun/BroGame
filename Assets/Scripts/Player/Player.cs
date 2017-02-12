@@ -24,7 +24,7 @@ public class Player : Entity
         anim.initialise(GetComponent<Animator>());
         inventory = transform.Find("Inventory");
         if(weapon) weapon.setOwner(this);
-        if (isLocalPlayer)Camera.main.GetComponent<MovementCamera>().setTargetTransform(transform);
+        if (isLocalPlayer && Camera.main.GetComponent<MovementCamera>()) Camera.main.GetComponent<MovementCamera>().setTargetTransform(transform);
     }
 	
 	void Update () {
