@@ -16,7 +16,7 @@ public class Player : Entity
     Vector2 direction;
     bool lookRight = true;
     bool grounded = false;
-    
+    Transform inventory;
 
     void Start () {
         direction = Vector2.zero;
