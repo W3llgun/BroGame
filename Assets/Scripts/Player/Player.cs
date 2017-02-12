@@ -22,6 +22,8 @@ public class Player : NetworkBehaviour
         direction = Vector2.zero;
         movement.initialise(GetComponent<Rigidbody2D>(), transform.Find("GroundCheck"));
         anim.initialise(GetComponent<Animator>());
+
+        if (isLocalPlayer)Camera.main.GetComponent<MovementCamera>().setTargetTransform(transform);
     }
 	
 	void Update () {
