@@ -6,10 +6,10 @@ using UnityEngine;
 public class Movement{
 
     Rigidbody2D rigid;
-    public float acceleration = 1;                    // The fastest the player can travel in the x axis.
-    public float maxSpeed = 2f;                    // The fastest the player can travel in the x axis.
-    public float jumpForce = 10;                  // Amount of force added when the player jumps.
-    public bool airControl = false;                 // Whether or not a player can steer while jumping;
+    public float acceleration = 1;        // The acceleration of the object
+    public float maxSpeed = 2f;           // The fastest the object can travel in the x axis.
+    public float jumpForce = 10;          // Amount of force added when the player jumps.
+    public bool airControl = false;       // Whether or not the object can steer while jumping;
     public LayerMask whatIsGround;
 
     bool grounded = false;
@@ -24,6 +24,8 @@ public class Movement{
 
     public void move(float direction, float deltaT)
     {
+        if (grounded == false && airControl == false) return;
+
         Vector2 vel = new Vector2(rigid.velocity.x + direction * (acceleration * deltaT), 0);
         vel = Vector2.ClampMagnitude(vel, maxSpeed);
         vel.y = rigid.velocity.y;
@@ -42,6 +44,8 @@ public class Movement{
     
     public bool isGrounded()
     {
+        if (groundCheck == null) return false;
+
         if (Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround))
         {
             grounded = true;

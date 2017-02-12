@@ -11,9 +11,13 @@ public class Player : NetworkBehaviour
     public Movement movement;
     public PlayerInput input;
     public PlayerAnimation anim;
+    public Weapon weapon = null;
+
     Vector2 direction;
     bool lookRight = true;
     bool grounded = false;
+    
+
     void Start () {
         direction = Vector2.zero;
         movement.initialise(GetComponent<Rigidbody2D>(), transform.Find("GroundCheck"));
@@ -22,12 +26,15 @@ public class Player : NetworkBehaviour
 	
 	void Update () {
         grounded = movement.isGrounded();
-        
         if (isLocalPlayer)
         {
             if (grounded)
             {
                 if (input.isJumpDown) movement.jump();
+            }
+            if(weapon != null && weapon.canUse() && input.isPrimaryShootDown)
+            {
+                weapon.Use();
             }
         }
 
