@@ -80,11 +80,13 @@ public class Player : NetworkBehaviour
         anim.setVerticalSpeed(movement.VerticalSpeed);
         anim.setWalkSpeed(movement.HorizontalSpeed);
 
-        if(movement.HorizontalSpeed > 0.1f)
+        float x = Utility.mouseDirection(Camera.main, transform).x;
+
+        if(x > 0)
         {
             if (!lookRight) flip();
         }
-        else if(movement.HorizontalSpeed < -0.1f)
+        else if(x < 0)
         {
             if (lookRight) flip();
         }

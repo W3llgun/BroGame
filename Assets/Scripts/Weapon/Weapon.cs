@@ -18,6 +18,6 @@ public abstract class Weapon : Entity{
     {
         owner = p;
         col.enabled = false;
-        rigid.isKinematic = true;
+        rigid.simulated = false;
     }
 }
