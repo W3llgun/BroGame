@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 
 
-public class Player : NetworkBehaviour
+public class Player : Entity
 {
     public Movement movement;
     public PlayerInput input;
@@ -19,9 +19,10 @@ public class Player : NetworkBehaviour
 
     void Start () {
         direction = Vector2.zero;
-        movement.initialise(GetComponent<Rigidbody2D>(), transform.Find("GroundCheck"));
+        movement.initialise(rigid, transform.Find("GroundCheck"));
         anim.initialise(GetComponent<Animator>());
         inventory = transform.Find("Inventory");
+        if(weapon) weapon.setOwner(this);
     }
 	
 	void Update () {
@@ -34,6 +35,7 @@ public class Player : NetworkBehaviour
             }
             if(weapon != null && weapon.canUse() && input.isPrimaryShootDown)
             {
+                
                 weapon.Use();
             }
         }
@@ -80,15 +82,17 @@ public class Player : NetworkBehaviour
         anim.setVerticalSpeed(movement.VerticalSpeed);
         anim.setWalkSpeed(movement.HorizontalSpeed);
 
-        float x = Utility.mouseDirection(Camera.main, transform).x;
-
-        if(x > 0)
+        if(isLocalPlayer)
         {
-            if (!lookRight) flip();
-        }
-        else if(x < 0)
-        {
-            if (lookRight) flip();
+            float x = Utility.mouseDirection(Camera.main, transform).x;
+            if (x > 0)
+            {
+                if (!lookRight) flip();
+            }
+            else if (x < 0)
+            {
+                if (lookRight) flip();
+            }
         }
     }
 
