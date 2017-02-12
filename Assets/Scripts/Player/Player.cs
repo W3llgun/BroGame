@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 
 public class Player : Entity
 {
+    
     public Movement movement;
     public PlayerInput input;
     public PlayerAnimation anim;
@@ -15,7 +16,7 @@ public class Player : Entity
     Vector2 direction;
     bool lookRight = true;
     bool grounded = false;
-    Transform inventory;
+    
 
     void Start () {
         direction = Vector2.zero;
@@ -23,6 +24,7 @@ public class Player : Entity
         anim.initialise(GetComponent<Animator>());
         inventory = transform.Find("Inventory");
         if(weapon) weapon.setOwner(this);
+        if (isLocalPlayer)Camera.main.GetComponent<MovementCamera>().setTargetTransform(transform);
     }
 	
 	void Update () {
@@ -94,21 +96,5 @@ public class Player : Entity
                 if (lookRight) flip();
             }
         }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.collider.CompareTag("Weapon"))
-        {
-            takeWeapon(collision.collider.gameObject);
-        }
-    }
-
-    void takeWeapon(GameObject wp)
-    {
-        weapon = wp.GetComponent<Weapon>();
-        wp.transform.position = inventory.position;
-        wp.transform.SetParent(inventory);
-        weapon.setOwner(this);
     }
 }
