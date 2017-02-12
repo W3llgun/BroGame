@@ -7,7 +7,6 @@ using UnityEngine.Networking;
 
 public class Player : NetworkBehaviour
 {
-    
     public Movement movement;
     public PlayerInput input;
     public PlayerAnimation anim;
@@ -16,12 +15,13 @@ public class Player : NetworkBehaviour
     Vector2 direction;
     bool lookRight = true;
     bool grounded = false;
-    
+    Transform inventory;
 
     void Start () {
         direction = Vector2.zero;
         movement.initialise(GetComponent<Rigidbody2D>(), transform.Find("GroundCheck"));
         anim.initialise(GetComponent<Animator>());
+        inventory = transform.Find("Inventory");
     }
 	
 	void Update () {
@@ -88,5 +88,21 @@ public class Player : NetworkBehaviour
         {
             if (lookRight) flip();
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.collider.CompareTag("Weapon"))
+        {
+            takeWeapon(collision.collider.gameObject);
+        }
+    }
+
+    void takeWeapon(GameObject wp)
+    {
+        weapon = wp.GetComponent<Weapon>();
+        wp.transform.position = inventory.position;
+        wp.transform.SetParent(inventory);
+        weapon.setOwner(this);
     }
 }
