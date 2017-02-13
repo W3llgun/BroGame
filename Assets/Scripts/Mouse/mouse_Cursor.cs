@@ -46,4 +46,5 @@ public class mouse_Cursor : MonoBehaviour {
         Rect pos = new Rect(mousePos.x - cursorImage.width/size_cursor/2, Screen.height - mousePos.y- cursorImage.height/size_cursor/2, cursorImage.width/size_cursor, cursorImage.height/size_cursor);
         GUI.Label(pos, cursorImage);
     }
+
 }

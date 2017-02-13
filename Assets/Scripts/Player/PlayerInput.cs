@@ -22,6 +22,8 @@ public class PlayerInput {
     [SerializeField]
     private KeyCode Jump;
     [SerializeField]
+    private KeyCode UseObject;
+    [SerializeField]
     private MouseInput primaryShoot;
     [SerializeField]
     private MouseInput secondaryShoot;
@@ -31,6 +33,7 @@ public class PlayerInput {
     public bool isUpDown { get { return Input.GetKeyDown(Up); } }
     public bool isDownDown { get { return Input.GetKeyDown(Down); } }
     public bool isJumpDown { get { return Input.GetKeyDown(Jump); } }
+    public bool isUseObjectDown { get { return Input.GetKeyDown(UseObject); } }
     public bool isPrimaryShootDown { get { return Input.GetMouseButtonDown((int)primaryShoot); } }
     public bool isSecondaryShootDown { get { return Input.GetMouseButtonDown((int)secondaryShoot); } }
 
@@ -40,6 +43,7 @@ public class PlayerInput {
     public bool isUp { get { return Input.GetKey(Up); } }
     public bool isDown { get { return Input.GetKey(Down); } }
     public bool isJump { get { return Input.GetKey(Jump); } }
+    public bool isUseObject { get { return Input.GetKey(UseObject); } }
     public bool isPrimaryShoot { get { return Input.GetMouseButton((int)primaryShoot); } }
     public bool isSecondaryShoot { get { return Input.GetMouseButton((int)secondaryShoot); } }
 }

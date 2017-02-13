@@ -12,6 +12,7 @@ public class Player : Entity
     public PlayerInput input;
     public PlayerAnimation anim;
     public Weapon weapon = null;
+    private float radiusCollision = 1f;
 
     Vector2 direction;
     bool lookRight = true;
@@ -59,6 +60,17 @@ public class Player : Entity
         else
         {
             movement.stop();
+        }
+
+        //get weapon
+        Collider2D item = Physics2D.OverlapCircle(transform.position, radiusCollision, 1<<LayerMask.NameToLayer("Weapon"));
+        if(item!=null)
+        {
+            if (input.isUseObjectDown)
+            {
+                weapon = item.gameObject.GetComponent<Weapon>();
+                weapon.setOwner(this);
+            }
         }
     }
 
