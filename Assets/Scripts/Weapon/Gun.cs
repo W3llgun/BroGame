@@ -15,7 +15,6 @@ public class Gun : Weapon {
 
     public override void Use()
     {
-        
         Cmdshoot();
     }
 

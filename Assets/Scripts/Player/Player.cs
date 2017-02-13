@@ -62,10 +62,11 @@ public class Player : Entity
         }
 
         //get weapon
-        Collider2D item = Physics2D.OverlapCircle(transform.position, radiusCollision, 1<<LayerMask.NameToLayer("Weapon"));
-        if(item!=null)
+       
+        if (input.isUseObjectDown)
         {
-            if (input.isUseObjectDown)
+            Collider2D item = Physics2D.OverlapCircle(transform.position, radiusCollision, 1 << LayerMask.NameToLayer("Weapon"));
+            if (item != null)
             {
                 weapon = item.gameObject.GetComponent<Weapon>();
                 weapon.setOwner(this);

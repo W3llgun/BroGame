@@ -22,5 +22,4 @@ public abstract class Weapon : Entity{
         transform.position = owner.transform.position + -owner.transform.right;
         transform.SetParent(owner.transform);
     }
-    
 }
