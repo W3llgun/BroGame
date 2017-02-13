@@ -38,7 +38,6 @@ public class Player : Entity
             }
             if(weapon != null && weapon.canUse() && input.isPrimaryShootDown)
             {
-                
                 weapon.Use();
             }
         }
@@ -109,4 +108,6 @@ public class Player : Entity
             }
         }
     }
+
+
 }

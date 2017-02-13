@@ -19,14 +19,8 @@ public abstract class Weapon : Entity{
         owner = p;
         col.enabled = false;
         rigid.simulated = false;
+        transform.position = owner.transform.position + -owner.transform.right;
+        transform.SetParent(owner.transform);
     }
-
-    private void Update()
-    {
-        //Follow Owner
-        if(owner!=null)
-        {
-            transform.position = owner.transform.position+new Vector3(owner.transform.localScale.x,0,0);
-        }
-    }
+    
 }
