@@ -31,7 +31,6 @@ public abstract class Weapon : Entity{
             float angle = Mathf.Atan2(relativePos.y, relativePos.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.AngleAxis(Mathf.LerpAngle(transform.rotation.eulerAngles.z, angle, speedRotation), Vector3.forward);
 
-            transform.position = owner.transform.position + -owner.transform.right;
             transform.SetParent(owner.transform);
             transform.rotation = rotation;
         }
