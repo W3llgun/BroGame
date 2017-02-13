@@ -10,7 +10,7 @@ public class MovementCamera : MonoBehaviour {
     public float limitY;
     // Use this for initialization
     void Start () {
-        target = transform;
+        target = null;
     }
 	
 	// Update is called once per frame
