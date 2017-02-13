@@ -20,7 +20,6 @@ public abstract class Weapon : Entity{
         owner = p;
         col.enabled = false;
         rigid.simulated = false;
-<<<<<<< HEAD
     }
 
     private void Update()
@@ -32,12 +31,9 @@ public abstract class Weapon : Entity{
             float angle = Mathf.Atan2(relativePos.y, relativePos.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.AngleAxis(Mathf.LerpAngle(transform.rotation.eulerAngles.z, angle, speedRotation), Vector3.forward);
 
-            transform.position = (owner.transform.position+new Vector3(owner.transform.localScale.x,0,0));
+            transform.position = owner.transform.position + -owner.transform.right;
+            transform.SetParent(owner.transform);
             transform.rotation = rotation;
         }
-=======
-        transform.position = owner.transform.position + -owner.transform.right;
-        transform.SetParent(owner.transform);
->>>>>>> origin/master
     }
 }
