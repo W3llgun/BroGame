@@ -15,7 +15,6 @@ public class Gun : Weapon {
 
     public override void Use()
     {
-        
         Cmdshoot();
     }
 
@@ -28,7 +27,7 @@ public class Gun : Weapon {
         Transform b = Instantiate(bullet).transform;
         b.position = transform.position;
         b.forward = transform.forward;
-        b.GetComponent<Projectile>().Launch(owner, Utility.mouseDirection(Camera.main, transform), damage, 30);
+        b.GetComponent<Projectile>().Launch(owner, Utility.mouseDirection(Camera.main, transform).normalized, damage, 30);
         NetworkServer.Spawn(b.gameObject);
         Destroy(b, 10);
     }
