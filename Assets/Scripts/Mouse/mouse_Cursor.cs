@@ -31,7 +31,6 @@ public class mouse_Cursor : MonoBehaviour {
 
             if(target!=null)
             {
-            Debug.Log(Vector3.Distance(target.transform.position, Camera.main.ScreenToWorldPoint(mousePos)));
                 guiColor.a = (Vector3.Distance(target.transform.position, Camera.main.ScreenToWorldPoint(mousePos))-10) * alpha_transistion;
             }
             else target = GameObject.FindGameObjectWithTag("Player");

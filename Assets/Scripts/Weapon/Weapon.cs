@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public abstract class Weapon : Entity{
     protected Player owner = null;
+    public float speedRotation;
     
     protected override void Awake()
     {
@@ -26,7 +27,12 @@ public abstract class Weapon : Entity{
         //Follow Owner
         if(owner!=null)
         {
-            transform.position = owner.transform.position+new Vector3(owner.transform.localScale.x,0,0);
+            Vector3 relativePos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            float angle = Mathf.Atan2(relativePos.y, relativePos.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.AngleAxis(Mathf.LerpAngle(transform.rotation.eulerAngles.z, angle, speedRotation), Vector3.forward);
+
+            transform.position = (owner.transform.position+new Vector3(owner.transform.localScale.x,0,0));
+            transform.rotation = rotation;
         }
     }
 }
