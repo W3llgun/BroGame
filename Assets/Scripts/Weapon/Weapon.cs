@@ -28,16 +28,13 @@ public abstract class Weapon : Entity{
         //Follow Owner and rotation with mouse
         if(owner!=null)
         {
-            
-            Vector3 relativePos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-            float angle = Mathf.Atan2(relativePos.y, relativePos.x) * Mathf.Rad2Deg;
-            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             Vector3 mouseInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
+            float angle = Mathf.Atan2(mouseInWorld.y - owner.transform.position.y, mouseInWorld.x - owner.transform.position.x) * Mathf.Rad2Deg;
+            
             //rotation around the player with latency
-            transform.position =Vector3.Lerp(transform.position,owner.transform.position + Vector3.ClampMagnitude(new Vector2(mouseInWorld.x- owner.transform.position.x, mouseInWorld.y- owner.transform.position.y), 1f), speedRotation);
+            transform.position = owner.transform.position + Quaternion.Lerp(transform.rotation,Quaternion.AngleAxis(angle, Vector3.forward), speedRotation) * Vector3.right;
             //rotation weapon
-            transform.rotation = rotation;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), speedRotation);
         }
     }
 }
