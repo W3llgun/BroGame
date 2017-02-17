@@ -9,7 +9,6 @@ public class Projectile : Entity {
 
     float damage = 1;
     float speed = 10;
-    bool shooted = false;
     Vector2 direction;
 
 
@@ -21,15 +20,15 @@ public class Projectile : Entity {
     public void Launch(Player launcher, Vector2 dir, float dmg, float spd)
     {
         owner = launcher;
-        shooted = true;
         direction = dir;
         damage = dmg;
         speed = spd;
+        transform.right = dir;
     }
 
     private void FixedUpdate()
     {
-        if(shooted)
+        if(base.isServer)
         {
             move();
         }
@@ -37,7 +36,7 @@ public class Projectile : Entity {
 
     void move()
     {
-        rigid.AddForce(direction * speed * Time.fixedDeltaTime, ForceMode2D.Impulse);
+        rigid.AddForce(transform.right * speed * Time.fixedDeltaTime, ForceMode2D.Impulse);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

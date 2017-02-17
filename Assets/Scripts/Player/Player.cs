@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-
-
 public class Player : Entity
 {
     
@@ -19,12 +17,17 @@ public class Player : Entity
     bool grounded = false;
     Transform inventory;
 
+    public override void OnStartLocalPlayer()
+    {
+        GetComponent<Renderer>().material.color = Color.green;
+    }
+
     void Start () {
         direction = Vector2.zero;
         movement.initialise(rigid, transform.Find("GroundCheck"));
         anim.initialise(GetComponent<Animator>());
         inventory = transform.Find("Inventory");
-        if(weapon) weapon.setOwner(this);
+        if(weapon) weapon.initWeapon(this);
         if (isLocalPlayer && Camera.main.GetComponent<MovementCamera>()) Camera.main.GetComponent<MovementCamera>().setTargetTransform(transform);
     }
 	
@@ -38,11 +41,27 @@ public class Player : Entity
             }
             if(weapon != null && weapon.canUse() && input.isPrimaryShootDown)
             {
-                weapon.Use();
+                //weapon.Use();
+                Cmdshoot();
             }
         }
 
         updateAnimation();
+    }
+
+    [Command]
+    void Cmdshoot()
+    {
+        GameObject bullet = null;
+        if (!bullet) bullet = Resources.Load<GameObject>("Projectile");
+        if (!bullet) return;
+        Debug.Log("Srv shoot");
+        Transform b = GameObject.Instantiate(bullet).transform;
+        b.position = transform.position + (transform.right);
+        b.right = transform.right;
+        b.GetComponent<Projectile>().Launch(this, Utility.mouseDirection(Camera.main, transform).normalized, 10, 30);
+        NetworkServer.Spawn(b.gameObject);
+        GameObject.Destroy(b.gameObject, 10);
     }
 
     public void FixedUpdate()
@@ -63,18 +82,20 @@ public class Player : Entity
 
         //get weapon
        
-        if (input.isUseObjectDown)
-        {
-            Collider2D item = Physics2D.OverlapCircle(transform.position, radiusCollision, 1 << LayerMask.NameToLayer("Weapon"));
-            if (item != null)
-            {
-                weapon = item.gameObject.GetComponent<Weapon>();
-                weapon.setOwner(this);
-            }
-        }
+        //if (input.isUseObjectDown)
+        //{
+        //    Collider2D item = Physics2D.OverlapCircle(transform.position, radiusCollision, 1 << LayerMask.NameToLayer("Weapon"));
+        //    if (item != null)
+        //    {
+        //        weapon = item.gameObject.GetComponent<Weapon>();
+        //        if (weapon && weapon.getOwner() == null)
+        //            weapon.setOwner(this);
+        //    }
+        //}
     }
 
-    void flip()
+    [Command]
+    public void CmdFlip()
     {
         lookRight = !lookRight;
 
@@ -82,7 +103,7 @@ public class Player : Entity
         theScale.x *= -1;
         transform.localScale = theScale;
     }
-
+    
     void updateAnimation()
     {
         if(grounded)
@@ -101,11 +122,11 @@ public class Player : Entity
             float x = Utility.mouseDirection(Camera.main, transform).x;
             if (x > 0)
             {
-                if (!lookRight) flip();
+                if (!lookRight) CmdFlip();
             }
             else if (x < 0)
             {
-                if (lookRight) flip();
+                if (lookRight) CmdFlip();
             }
         }
     }

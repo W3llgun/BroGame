@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 
 public class Entity : NetworkBehaviour
 {
-
     protected Collider2D col { get; set; }
     protected Rigidbody2D rigid { get; set; }
 

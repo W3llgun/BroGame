@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 public class LaserPistol : Weapon
 {
     public GameObject laserBeam;
-
+    
     public override bool canUse()
     {
         return true;

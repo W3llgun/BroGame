@@ -12,23 +12,24 @@ public class Gun : Weapon {
     {
         return true;
     }
-
+    
     public override void Use()
     {
+        Debug.Log("Shoot");
         Cmdshoot();
     }
 
     [Command]
     void Cmdshoot()
     {
-
-        if (!bullet) return;
-
-        Transform b = Instantiate(bullet).transform;
-        b.position = transform.position;
-        b.forward = transform.forward;
-        b.GetComponent<Projectile>().Launch(owner, Utility.mouseDirection(Camera.main, transform).normalized, damage, 30);
+        //if (!bullet) bullet = Resources.Load<GameObject>("Projectile");
+        //if (!bullet) return;
+        Debug.Log("Srv shoot");
+        Transform b = GameObject.Instantiate(bullet).transform;
+        b.position = owner.transform.position + (owner.transform.right);
+        b.right = owner.transform.right;
+        b.GetComponent<Projectile>().Launch(owner, Utility.mouseDirection(Camera.main, owner.transform).normalized, damage, 30);
         NetworkServer.Spawn(b.gameObject);
-        Destroy(b, 10);
+        GameObject.Destroy(b.gameObject, 10);
     }
 }
